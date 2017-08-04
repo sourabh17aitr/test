@@ -1,0 +1,25 @@
+<div class="container p-5">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 p-5" style="background-color: #d1d1d4">
+      <form class="example-form text-center" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <div formGroupName="profile">
+          <h3>Regesteration From</h3>
+          <md-input-container class="example-full-width">
+            <input formControlName="name" placeholder="Name" mdInput>
+          </md-input-container>
+          <md-input-container class="example-full-width">
+            <input formControlName="email" placeholder="Email" mdInput>
+          </md-input-container>
+          <md-input-container class="example-full-width">
+            <input type="number" formControlName="mobile" placeholder="Mobile" mdInput>
+          </md-input-container>
+
+          <div class="text-center">
+            <button class="btn btn-primary" [disabled]="!myForm.valid" type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<nav class="navbar navbar-toggleable-md navbar-light navbar-inverse bg-primary tc-white">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" >TRANSISTIC</a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink=''>Home<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/register">Register</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container p-5">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 p-5" style="background-color: #d1d1d4">
+      <form class="example-form text-center" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <div formGroupName="profile">
+          <h3>SignIn</h3>
+          <md-input-container class="example-full-width">
+            <input (click)='onEmailClick()' formControlName="email" placeholder="Email Address or UserName" mdInput>
+          </md-input-container>
+          <md-input-container class="example-full-width">
+            <input type="password" formControlName="mobile" placeholder="PassWord" mdInput>
+          </md-input-container>
+          <span class='errorMsg p-2'><p>{{loginErrorMsg}}</p></span>
+          <div class="text-center">
+            <button class="btn btn-primary" [disabled]="!myForm.valid" type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

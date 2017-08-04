@@ -1,0 +1,132 @@
+<div class="cointainer-fluid p-5 m-2">
+  <div class="text-center p-3">
+    <h2>Tell Us About YourSelf</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <p></p>
+    </div>
+    <form class="example-form col-md-6" [formGroup]="shipingDetailForm" (ngSubmit)="onSubmit()">
+      <table class="example-full-width" cellspacing="0">
+        <tr formGroupName="personalDetails">
+          <td>
+            <md-input-container class="example-full-width">
+              <input formControlName="name" mdInput [(ngModel)] = 'CustomerName'>
+            </md-input-container>
+          </td>
+          <td>
+            <md-input-container class="example-full-width">
+              <input formControlName="email" mdInput placeholder="Email">
+            </md-input-container>
+          </td>
+          <td>
+            <md-input-container class="example-full-width">
+               <span mdPrefix>+91 &nbsp;</span> 
+              <input formControlName="mobile" type="number" mdInput placeholder="Telephone">
+              <!-- <md-icon mdSuffix>mode_edit</md-icon> -->
+            </md-input-container>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</div>
+
+<div class="cointainer p-3" style="background-color: #dad9d8">
+  <div class="text-center p-5">
+    <h4>We need the detailed addresses too</h4>
+  </div>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-4 m-3" style="background-color: white">
+      <form class="example-form" [formGroup]="shipingDetailForm" (ngSubmit)="onSubmit()">
+        <div formGroupName="orignalAddress">
+          <md-input-container class="example-full-width">
+            <h5>Orignal Address</h5>
+            <input mdInput disabled>
+          </md-input-container>
+
+          <md-input-container class="example-full-width">
+            <input formControlName="name" mdInput  value = {{CustomerName}}>
+          </md-input-container>
+          <p>
+            <md-input-container class="example-full-width">
+              <textarea formControlName="address" mdInput placeholder="Address">1600 Amphitheatre Pkwy</textarea>
+            </md-input-container>
+            <md-input-container class="example-full-width">
+              <textarea formControlName="landmark" mdInput placeholder="Landmark"></textarea>
+            </md-input-container>
+          </p>
+
+          <table class="example-full-width" cellspacing="0">
+            <tr>
+              <td>
+                <md-input-container class="example-full-width">
+                  <input formControlName="city" placeholder="City" mdInput value= {{customer.Origin}}>
+                </md-input-container>
+              </td>
+              <td>
+                <md-input-container class="example-full-width">
+                  <input formControlName="state" placeholder="State" mdInput value= {{customer.originState}}>
+                </md-input-container>
+              </td>
+              <td>
+                <md-input-container class="example-full-width">
+                  <input formControlName="postCode" mdInput #postalCode maxlength="6" placeholder="Postal Code">
+                </md-input-container>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4 m-3" style="background-color: white">
+      <form class="example-form" [formGroup]="shipingDetailForm" (ngSubmit)="onSubmit()">
+        <div formGroupName="destinationAddress">
+          <md-input-container class="example-full-width">
+            <h5>Destination Address</h5>
+            <input mdInput disabled>
+          </md-input-container>
+
+          <md-input-container class="example-full-width">
+            <input formControlName="name" mdInput  value = {{CustomerName}}>
+          </md-input-container>
+          <p>
+            <md-input-container class="example-full-width">
+              <textarea formControlName="address" mdInput placeholder="Address">1600 Amphitheatre Pkwy</textarea>
+            </md-input-container>
+            <md-input-container class="example-full-width">
+              <textarea formControlName="landmark" mdInput placeholder="Landmark"></textarea>
+            </md-input-container>
+          </p>
+
+          <table class="example-full-width" cellspacing="0">
+            <tr>
+              <td>
+                <md-input-container class="example-full-width">
+                  <input formControlName="city" placeholder="City" mdInput value= {{customer.Destination}}>
+                </md-input-container>
+              </td>
+              <td>
+                <md-input-container class="example-full-width">
+                  <input formControlName="state" placeholder="State" mdInput value= {{customer.destinationState}}>
+                </md-input-container>
+              </td>
+              <td>
+                <md-input-container class="example-full-width">
+                  <input formControlName="postCode" mdInput #postalCode maxlength="6" placeholder="Postal Code">
+                </md-input-container>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<form class="m-5" [formGroup]="shipingDetailForm" (ngSubmit)="onSubmit()">
+  <div class="text-center">
+    <button md-button class="ang-btn" [disabled]="!shipingDetailForm.valid" type="submit">Submit</button>
+  </div>
+</form>

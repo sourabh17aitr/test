@@ -1,0 +1,145 @@
+<div class="cointainer">
+    <div class="row" style="padding:0%; margin:0%">
+        <div class="col-md-2 px-0" style="background-color: white; height: auto">
+            <h3 class="col-md-12 p-2 text-center " style="background-color: #dad6d7">TRANSISTIC</h3>
+            <div class="list-group p-4 m-2">
+                <a class="list-group-item list-group-item-action m-2" (click)='getOrders()'>Orders</a>
+                <a class="list-group-item list-group-item-action m-2" routerLink="/home/shiftVehicle">Shift Vehicle </a>
+                <div class="p-4"><p></p></div>
+            </div>
+            <div class="p-5"></div>
+            <div class="p-5"></div>
+            <div class="p-5"></div>
+        </div>
+        <div class="col-md-10 px-0" style="background-color: #f5f1f2; height:auto">
+            <nav class="p-1 navbar navbar-toggleable-md navbar-light navbar-inverse bg-primary tc-white">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" routerLink=''>Home<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" (click)='onLogout()'>LogOut</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">Vendor Dashboard</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="p-5">
+                <div class="list-group p-3">
+                    <a class="list-group-item list-group-item-action flex-column align-items-start active">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">WelCome {{vendor.name}}</h5>
+                            <small>3 days ago</small>
+                        </div>
+                        <p class="mb-1">Here you can check the status of your booking</p>
+                    </a>
+                </div>
+                <!-- orders list -->
+                <div *ngFor='let orderDetail of orderDetails, let i = index' class="p-3 m-1" [hidden]='orderHtmlHidden'>
+                    <div class="list-group" (click)='getVehicleList(orderDetail)'>
+                        <a class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">From {{orderDetail.orignalCity}} to {{orderDetail.destinationCity}}</h5>
+                                <small>Status {{orderDetail.status}}</small>
+                            </div>
+                            <p class="mb-1">{{orderDetail.shiftType}} Shifting on {{orderDetail.date.day}} / {{orderDetail.date.month}} /
+                                {{orderDetail.date.year}}</p>
+                        </a>
+                    </div>
+                </div>
+                <!-- Selected order item List -->
+                <div *ngIf='vehicleList' [hidden]='vechicleListHidden' class="p-3 m-1">
+                    <div *ngFor='let item of vehicleList'>
+                        <div class="m-2" (click)="getSelectedItemDetails(item)">
+                            <a class=" list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between p-2">
+                                    <h5 class="mb-1">Shiifting of {{item.type}} ('{{item.seg}}')</h5>
+                                </div>
+                                <p class="mb-1 p-3">
+                                    on {{selectedItemDetails.date.day}} / {{selectedItemDetails.date.month}} / {{selectedItemDetails.date.year}}
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Order Detail From -->
+            <div [hidden]='orderDescriptionHtmlForm' *ngIf='selectedItemDetails'>
+                <div>
+                    <div class="p-5" style="background-color: #d1d1d4">
+                        <div>
+                            <h4>Item Need To Shift</h4>
+                            <ul *ngFor="let object of homeItemDetail">
+                                <li>{{object.quantity}} {{object.itemType}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="container p-5">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6 p-5" style="background-color: #d1d1d4">
+                            <form class="example-form text-center">
+                                <div>
+                                    <h3> Shifting Of {{ selectedItemDetails.shiftType}} Details</h3>
+
+
+                                    <div *ngFor="let obj of selectedItemDetails | keys">
+                                        <div>
+                                            <div *ngIf='obj.key != "id" &&
+                                                     obj.key != "userName" &&
+                                                      obj.key != "email" &&
+                                                       obj.key != "vehicleList" &&
+                                                       obj.key != "date"&&
+                                                       obj.key != "comments" &&
+                                                       obj.key != "homeDetail" '>
+                                                <md-input-container class="example-full-width">
+                                                    <input type="text" value="{{obj.key}} : {{obj.value}}" mdInput disabled>
+                                                </md-input-container>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div [formGroup]="itemUpdateForm" (ngSubmit)="onSubmition()">
+                                        <div  formGroupName="details">
+                                            <md-input-container class="example-full-width">
+                                                <input formControlName="price" type="number" placeholder="Enter Price" mdInput>
+                                            </md-input-container>
+                                           <!--  <md-input-container class="example-full-width">
+                                                <textarea formControlName="comment" type="text" placeholder="Comments" mdInput></textarea>
+                                            </md-input-container> -->
+
+                                            <div class="text-center">
+                                                <button (click)="onSubmition()" class="btn btn-primary" [disabled]="itemUpdateForm.invalid" type="submit">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            {{formVaildationMssage}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- <div class="text-center" *ngFor="let entrys of selectedOrderDetails | keys">
+    <div *ngFor="let entry of entrys.value | keys">
+        <button class="btn btn-primary">{{key}}</button>
+        <p> Key: {{entry.key}}, value: {{entry.value}}</p>
+    </div>
+</div> -->

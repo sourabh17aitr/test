@@ -1,0 +1,98 @@
+<div class="cointainer p-3">
+  <div>
+    <div class="text-center">
+      <h3>Select Vehicles</h3>
+    </div>
+  </div>
+</div>
+<div class="cointainer p-3">
+  <!-- <div class="row p-5">
+    <div class="col-md-3 ">
+    </div>
+    <div ngbDropdown class="d-inline-block col-md-2 m-2">
+      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+        {{selectVehicleTitle}}</button>
+      <div class="dropdown-menu" aria-labelledby="dropdownBasic1">
+        <div *ngFor='let vehicle of vehicle'>
+          <button class="dropdown-item" (click)="selectVehicleType(vehicle)">{{vehicle.type}}</button>
+        </div>
+      </div>
+    </div>
+    <div ngbDropdown class="d-inline-block col-md-2 m-2">
+      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{selectSegmentTitle}}</button>
+      <div class="dropdown-menu" aria-labelledby="dropdownBasic1">
+        <div *ngIf='selectedVehicle'>
+          <div *ngFor='let vehicles of selectedVehicle.typeList'>
+            <button class="dropdown-item" (click)="selectVehicleSegment(vehicles)">{{vehicles}}</button>
+          </div>
+        </div>
+        <div *ngIf='!selectedVehicle'>
+          <button class="dropdown-item">Select Vehicle</button>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-md-2 m-2">
+      <button class="btn-primary btn" (click)="addVehicle()">Add Vehicle</button>
+    </div>
+  </div> -->
+  <div class="row p-3 m-3">
+    <div class="col-md-3 "></div>
+    <div class="col-md-2">
+      <md-select placeholder="Select Vehicle">
+        <md-option *ngFor="let vehicle of vehicle" value={{selectVehicleTitle}}>
+          <div (click)="selectVehicleType(vehicle)"><span>{{vehicle.type}}</span></div>
+        </md-option>
+      </md-select>
+    </div>
+    <div class="col-md-2">
+      <md-select placeholder='select Segment'>
+        <div *ngIf='selectedVehicle'>
+          <md-option *ngFor='let vehicles of selectedVehicle.typeList' value={{selectSegmentTitle}}>
+            <div (click)="selectVehicleSegment(vehicles)">
+              <span>{{vehicles}}</span>
+            </div>
+          </md-option>
+        </div>
+      </md-select>
+    </div>
+    <div class="col-md-2">
+      <!-- <button class="btn-primary btn" (click)="addVehicle()">Add Vehicle</button> -->
+      <button md-button (click)="addVehicle()" class="ang-btn" >Add Vehicle</button>
+    </div>
+  </div>
+</div>
+
+<div class="cointainer p-5">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Vehicle Type</th>
+            <th>Segment</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngIf='addedVehicleList'>
+          <tr *ngFor='let addedVehicleList of addedVehicleList'>
+            <th scope="row">{{addedVehicleList.count+1}}</th>
+            <td>{{addedVehicleList.type}}</td>
+            <td>{{addedVehicleList.seg}}</td>
+            <td (click)='deleteAddedVehicle(addedVehicleList)'>
+              <button md-button class="ang-btn">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+</div>
+
+<div class="text-center">
+  <!-- <button class="btn btn-primary" (click)='save()'>Save And Proceed</button> -->
+  <button md-button (click)='save()' class="ang-btn" >Save And Proceed</button>
+</div>

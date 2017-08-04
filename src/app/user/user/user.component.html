@@ -1,0 +1,175 @@
+<div class="cointainer">
+    <div class="row" style="padding:0%; margin:0%">
+        <div class="col-md-2 px-0" style="background-color: white; height: auto">
+            <h3 class="col-md-12 p-2 text-center " style="background-color: #dad6d7">TRANSISTIC</h3>
+            <div class="list-group p-4 m-2">
+                <a class="list-group-item list-group-item-action m-2" (click)='getOrders()'>Orders</a>
+                <a class="list-group-item list-group-item-action m-2" routerLink="/home/shiftVehicle">Shift Vehicle </a>
+                <a class="list-group-item list-group-item-action m-2" (click)='getTerms()'>Terms</a>
+            </div>
+            <div class="p-5">
+                <p></p>
+            </div>
+            <div class="p-5">
+                <p></p>
+            </div>
+            <div class="p-3">
+                <p></p>
+            </div>
+        </div>
+        <div class="col-md-10 px-0" style="background-color: #f5f1f2; height:auto;">
+            <nav class="p-1 navbar navbar-toggleable-md navbar-light navbar-inverse bg-primary tc-white">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" routerLink=''>Home<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" (click)='onLogout()'>LogOut</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="p-5">
+                <div class="list-group">
+                    <a class="list-group-item list-group-item-action flex-column align-items-start active">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">WelCome {{user.name}}</h5>
+                            <small>3 days ago</small>
+                        </div>
+                        <p class="mb-1">Here you can check the status of your booking</p>
+                    </a>
+                    <div *ngIf='orderDetails'>
+                        <div *ngFor='let order of orderDetails'>
+                            <a (click)='getVehicleList(order)' class="list-group-item list-group-item-action flex-column align-items-start" [hidden]='orderListHidden'>
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">Detail of Shiifting {{order.shiftType}}</h5>
+                                    <small>Status {{order.status}}</small>
+                                </div>
+                                <p class="mb-1">
+                                    From {{order.orignalCity}} To {{order.destinationCity}} on {{date.day}} / {{date.month}} / {{date.year}}
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- selected order  item  details -->
+                    <div *ngIf='vehicleList' class="p-3">
+                        <div *ngFor='let vehicle of vehicleList'>
+                            <div class="m-2" (click)='getRateList(vehicle)'>
+                                <a class=" list-group-item list-group-item-action flex-column align-items-start" [hidden]='vechicleListHidden'>
+                                    <div class="d-flex w-100 justify-content-between p-2">
+                                        <h5 class="mb-1">Shiifting of {{vehicle.type}} ({{vehicle.seg}})</h5>
+
+                                    </div>
+                                    <p class="mb-1">
+
+                                    </p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div *ngIf='homeList' class="p-3">
+                        <div *ngFor='let home of homeList'>
+                            <div>
+                                <a class=" list-group-item list-group-item-action flex-column align-items-start" [hidden]='homeListHtmlHidden'>
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Shiifting of {{home.itemType}} having {{home.quantity}} Quantity</h5>
+
+                                    </div>
+                                </a>
+                            </div>
+                        </div>  
+                    </div>
+
+                    <div *ngIf='selectedItem' class="p-5">
+                        <div [hidden]='selectedHomeItemHidden'>
+                            <div class="m-2" *ngFor='let item of selectedItem'>
+                                <a class=" list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between p-2">
+                                        <h5 class="mb-1">Shiifting of {{item.item}} </h5>
+                                        <small><button md-button>Confirm</button></small>
+                                    </div>
+                                    <p class="mb-1">
+                                        at Rs {{item.price}}
+                                        by {{item.vendorName}}
+                                    </p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Rate list of selected Item -->
+                    <div *ngIf='selectedItem' class="p-5">
+                        <div [hidden]='selectedItemHidden'>
+                             <div>
+                                <md-paginator [length]="selectedItem.length" [pageSize]="1">
+                                </md-paginator>
+                            </div> 
+                            <div class="m-2" *ngFor='let item of selectedItem'>
+                                <a class=" list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between p-2">
+                                        <h5 class="mb-1">Shiifting of {{item.item}} </h5>
+                                        <small><button md-button>Confirm</button></small>
+                                    </div>
+                                    <p class="mb-1">
+                                        {{item.itemDetails.replace('"',' ').replace('"',' ').replace('"',' ').replace('"',' ').replace('&&','And')}} at Rs {{item.price}}
+                                        by {{item.vendorName}}
+                                    </p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div [hidden]='termsHtmlHidden' class="p-4" style="background-color: white">
+                            <h3 class="text-center p-3">Terms And Condition</h3>
+                            <md-list class="p-3">
+                                <md-list-item>1. Your vehicle must be driveable</md-list-item>
+                                <md-list-item>2. If your vehicle breaks down between collection and delivery you will still be charged
+                                    the full delivery fee.</md-list-item>
+                                <md-list-item>3. The vehicle must be roadworthy, road legal and have a valid MOT and TAX disk.</md-list-item>
+                                <md-list-item>4. The vehicle must not contain any illegal or unsafe objects. A full abort may be applicable
+                                    and is at your cost if you fail to advise prior.</md-list-item>
+                            </md-list>
+                            <p>
+                                Finally, thank you for choosing to use Transistic. We pride ourselves in providing the industry's best-managed vehicle delivery
+                                service. Vehicle logistics can be complicated and can easily go wrong if incorrect information
+                                is provided.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- <div [hidden]='selectedItemHidden'>
+    <div>
+        <md-paginator [length]="selectedItem.length" [pageSize]="1">
+        </md-paginator>
+    </div>
+    <div class="m-2" *ngFor='let item of selectedItem'>
+        <a class=" list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between p-2">
+                <h5 class="mb-1">Shiifting of {{item.item}} </h5>
+                <small><button md-button>Confirm</button></small>
+            </div>
+            <p class="mb-1">
+                {{item.itemDetails.replace('"',' ').replace('"',' ').replace('"',' ').replace('"',' ').replace('&&','And')}} at Rs {{item.price}}
+                by {{item.vendorName}}
+            </p>
+        </a>
+    </div>
+</div> -->

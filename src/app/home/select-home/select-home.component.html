@@ -1,0 +1,69 @@
+<div class="cointainer p-4">
+  <md-tab-group>
+    <md-tab label="1 BHK">1 BHK</md-tab>
+    <md-tab label="2 BHK">2 BHK</md-tab>
+    <md-tab label="3 BHK">3 BHK</md-tab>
+    <md-tab label="Penthouse/Bunglow">Penthouse/Bunglow</md-tab>
+  </md-tab-group>
+</div>
+
+<div class="cointainer p-3">
+  <div class="text-center p-5">
+  </div>
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-6 p-3 m-1" style="background-color: #dad9d8">
+      <h2 class="text-center p-2">Select Articles to be Moved</h2>
+      <div class="row p-3">
+        <div class="col-md-2"></div>
+        <div class="col-md-3">
+          <md-select placeholder="Select Item">
+            <md-option *ngFor="let option of options" value={{option}}>
+              <div (click)="selecthomeType(option)"><span>{{option}}</span></div>
+            </md-option>
+          </md-select>
+        </div>
+        <div class="col-md-3">
+          <md-select placeholder="Quantity">
+            <md-option *ngFor="let item of quantity" value={{selectVehicleTitle}}>
+              <div (click)="selectTypeQuantity(item)"><span>{{item}}</span></div>
+            </md-option>
+          </md-select>
+        </div>
+        <div class="col-md-2" (click)='addItem()'><button md-button>Add</button></div>
+      </div>
+    </div>
+    <div class="col-md-4 m-1" style="background-color: #dad9d8">
+      <h2 class="text-center p-3">List</h2>
+      <div class="row p-3">
+        <div class="col-md-1"></div>
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Item Type</th>
+                <th>Quantity</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody *ngIf='homeDetailList'>
+              <tr *ngFor='let detail of homeDetailList; let i = index'>
+                <th scope="row">{{i+1}}</th>
+                <td>{{detail.itemType}}</td>
+                <td>{{detail.quantity}}</td>
+                <td (click)='deleteAddedVehicle(addedVehicleList)'>
+                  <button md-button>Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center p-5" (click)='onSave()'>
+    <button md-button class="ang-btn">Save And Proceed</button>
+  </div>
+</div>
